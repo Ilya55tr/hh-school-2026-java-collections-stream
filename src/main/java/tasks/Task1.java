@@ -2,9 +2,10 @@ package tasks;
 
 import common.Person;
 import common.PersonService;
-import java.util.Collections;
-import java.util.List;
-import java.util.Set;
+
+import java.util.*;
+import java.util.function.Function;
+import java.util.stream.Collectors;
 
 /*
 Задача 1
@@ -21,8 +22,19 @@ public class Task1 {
     this.personService = personService;
   }
 
+/*
+Построение HashMap-O(n),
+формирование результата-O(n),
+потому что мы один раз проходим по списку id
+и получение Person из personMap-O(1)
+итоговая сложность-O(n)
+*/
   public List<Person> findOrderedPersons(List<Integer> personIds) {
     Set<Person> persons = personService.findPersons(personIds);
-    return Collections.emptyList();
+    Map<Integer, Person> personMap = persons.stream()
+        .collect(Collectors.toMap(Person::id, person -> person));
+    List<Person> result = new ArrayList<>(personIds.size());
+    personIds.forEach(id -> result.add(personMap.get(id)));
+    return result;
   }
 }
