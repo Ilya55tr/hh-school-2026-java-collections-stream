@@ -24,14 +24,11 @@ public class Task6 {
     Map<Integer, Area> areaMap = areas.stream()
         .collect(Collectors.toMap(Area::getId, area -> area));
     return persons.stream()
-        .flatMap(person -> {
-          Set<Integer> areaIds = personAreaIds.get(person.id());
-          return areaIds.stream()
-              .map(areaId -> person.firstName()
-                             + " - " +
-                             areaMap.get(areaId).getName()
-              );
-        })
+        .flatMap(person -> personAreaIds.get(person.id()).stream()
+            .map(areaId -> person.firstName()
+                           + " - " +
+                           areaMap.get(areaId).getName()
+            ))
         .collect(Collectors.toSet());
   }
 }
