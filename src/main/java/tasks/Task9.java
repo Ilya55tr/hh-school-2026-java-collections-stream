@@ -21,9 +21,6 @@ public class Task9 {
   Раньше remove(0) изменял исходную коллекцию.
   Теперь просто пропускаем первый элемент.*/
   public List<String> getNames(List<Person> persons) {
-    if (persons == null || persons.size() <= 1) {
-      return Collections.emptyList();
-    }
     return persons.stream()
         .skip(1)
         .map(Person::firstName)
