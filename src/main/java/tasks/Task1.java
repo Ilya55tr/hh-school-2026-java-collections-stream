@@ -33,8 +33,8 @@ public class Task1 {
     Set<Person> persons = personService.findPersons(personIds);
     Map<Integer, Person> personMap = persons.stream()
         .collect(Collectors.toMap(Person::id, person -> person));
-    List<Person> result = new ArrayList<>(personIds.size());
-    personIds.forEach(id -> result.add(personMap.get(id)));
-    return result;
+    return personIds.stream()
+        .map(personMap::get)
+        .collect(Collectors.toList());
   }
 }
