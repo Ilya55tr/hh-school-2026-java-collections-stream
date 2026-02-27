@@ -52,11 +52,12 @@ public class Task9 {
   Используем putIfAbsent, чтобы при возможных повторяющихся id
   не перезаписывать уже добавленное значение.*/
   public Map<Integer, String> getPersonNames(Collection<Person> persons) {
-    Map<Integer, String> map = new HashMap<>();
-    for (Person person : persons) {
-      map.putIfAbsent(person.id(), convertPersonToString(person));
-    }
-    return map;
+    return persons.stream()
+        .collect(Collectors.toMap(
+            Person::id,
+            this::convertPersonToString,
+            (existing, replacement) -> existing
+        ));
   }
 
   // есть ли совпадающие в двух коллекциях персоны?
